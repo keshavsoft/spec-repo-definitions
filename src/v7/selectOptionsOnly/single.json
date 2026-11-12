@@ -1,0 +1,17 @@
+[
+  {
+    "narration": "Build options array",
+    "destinationPath": {
+      "fileName": "base",
+      "filePath": []
+    },
+    "sourcePath": {
+      "fileName": "data",
+      "filePath": [
+        "data"
+      ]
+    },
+    "templateKey": "buildOption",
+    "func": "fromCollection"
+  }
+]

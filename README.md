@@ -8,11 +8,11 @@ Previously, `definitions.json` lived as a monolithic 600+ line "godfather" file 
 
 **`spec-repo-definitions`** solves this by:
 1. **Decoupling Responsibilities**: Maintaining definitions in an isolated, dedicated repository.
-2. **Version-Driven Source Trees**: Organizing all definitions by version under `src/` (`src/v5/`, `src/v6/`, etc.).
-3. **Folder-Isolated Components & Variants**: Breaking each definition down into atomic files:
-   - `base.json` (DOM skeleton)
-   - `single.json` (1D mappings like colgroups, headers, footers)
-   - `double.json` (2D mappings like table bodies)
+2. **Version-Driven Source Trees**: Organizing all definitions by version under `src/` (`src/v5/`, `src/v6/`, and latest `src/v7/`).
+3. **Two-Level Folder Clarity**:
+   - **Level 1**: Component (`table`, `select`, `dataList`, `form`, `searchInput`, `selectOptionsOnly`)
+   - **Level 2**: Variant (e.g. under `table`: `simple`, `withFooter`, `bodyOnly`, `footerOnly`, `headerOnly`)
+   - **Inside**: Micro-files (`base.json`, `single.json`, `double.json`)
 4. **Deterministic Compiler**: A lightweight build wrapper that compiles the directory trees into production-ready `definitions.json` artifacts with pinpoint syntax validation and zero runtime dependencies.
 
 ---
@@ -21,16 +21,17 @@ Previously, `definitions.json` lived as a monolithic 600+ line "godfather" file 
 
 ```text
 spec-repo-definitions/
-├── package.json
+├── package.json                                 # Exposes ., ./src/*, and ./dist/*
 ├── README.md
 ├── scripts/
 │   ├── build.js                                 # Compiler wrapper
-│   └── test.js                                  # Verification and parity test
+│   └── test.js                                  # Parity & integrity test suite
 ├── bin/
 │   └── cli.js                                   # CLI runner
 ├── src/
-│   ├── v5/                                      # Version 5 definitions
-│   └── v6/                                      # Version 6 definitions (current)
+│   ├── v5/                                      # Historical version 5
+│   ├── v6/                                      # Historical version 6
+│   └── v7/                                      # ★ Active latest version
 │       ├── table/
 │       │   ├── simple/
 │       │   │   ├── base.json
@@ -59,7 +60,10 @@ spec-repo-definitions/
     ├── v6/
     │   ├── definitions.json
     │   └── index.js
-    ├── definitions.json                         # Latest version (v6)
+    ├── v7/
+    │   ├── definitions.json
+    │   └── index.js
+    ├── definitions.json                         # Latest compiled definitions (v7)
     └── index.js                                 # Main ESM entry point
 ```
 
@@ -73,54 +77,51 @@ spec-repo-definitions/
 npm install @keshavsoft/spec-repo-definitions
 ```
 
-#### Import in JavaScript (ESM)
+#### Import Latest Definitions in JavaScript (ESM)
 
 ```javascript
-// Import latest version definitions
 import definitions from "@keshavsoft/spec-repo-definitions";
-
-// Or import specific versions
-import { v5, v6 } from "@keshavsoft/spec-repo-definitions";
-
-// Or import a version directly
-import v6Definitions from "@keshavsoft/spec-repo-definitions/v6";
 ```
 
-#### Direct JSON import
+#### Import Specific Versions
 
 ```javascript
-import definitions from "@keshavsoft/spec-repo-definitions/v6/definitions.json" with { type: "json" };
+import { v5, v6, v7 } from "@keshavsoft/spec-repo-definitions";
+```
+
+#### Raw Modular Micro-Files (Direct Access to `src/`)
+
+Because `./src/*` is exported, you can inspect or import any component definition directly:
+
+```javascript
+import tableBase from "@keshavsoft/spec-repo-definitions/src/v7/table/simple/base.json" with { type: "json" };
+```
+
+#### Compiled Artifacts (Direct Access to `dist/`)
+
+```javascript
+import v7Defs from "@keshavsoft/spec-repo-definitions/dist/v7/definitions.json" with { type: "json" };
 ```
 
 ---
 
-## Build & Delivery Commands
+## Build & Test Commands
 
-- **Build definitions**:
+- **Build definitions** (compiles all versions into `dist/`):
   ```bash
   npm run build
   ```
-- **Test parity against `spec-repo`**:
+- **Run tests & verify integrity**:
   ```bash
   npm run test
   ```
-- **Build and Deliver to local `spec-repo`**:
+- **Deliver compiled output to local `spec-repo`**:
   ```bash
   npm run deliver
   ```
 
 ---
 
-## Publishing
-
-To publish to npm:
-```bash
-npm publish --access public
-```
-
----
-
 ## License
 
 ISC © KeshavSoft
-

@@ -1,6 +1,6 @@
 {
-  "name": "@keshavsoft/spec-repo-definitions",
-  "version": "1.0.0",
+  "name": "spec-repo-definitions",
+  "version": "1.7.1",
   "description": "Modular, versioned JSON-to-DOM definitions and compiler wrapper for KeshavSoft spec-repo.",
   "publishConfig": {
     "access": "public"
@@ -8,21 +8,9 @@
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "default": "./dist/index.js"
-    },
-    "./v5": {
-      "import": "./dist/v5/index.js",
-      "default": "./dist/v5/index.js"
-    },
-    "./v6": {
-      "import": "./dist/v6/index.js",
-      "default": "./dist/v6/index.js"
-    },
-    "./v5/definitions.json": "./dist/v5/definitions.json",
-    "./v6/definitions.json": "./dist/v6/definitions.json",
-    "./definitions.json": "./dist/definitions.json"
+    ".": "./dist/index.js",
+    "./dist/*": "./dist/*",
+    "./src/*": "./src/*"
   },
   "bin": {
     "spec-repo-definitions": "bin/cli.js"
@@ -54,4 +42,3 @@
   "license": "ISC",
   "type": "module"
 }
-

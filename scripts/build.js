@@ -72,7 +72,7 @@ export function build() {
         throw new Error('No version directories found in src/');
     }
 
-    // Sort versions e.g. v5, v6
+    // Sort versions numerically: v5, v6, v7
     versionEntries.sort((a, b) => {
         const numA = parseInt(a.replace(/\D/g, ''), 10) || 0;
         const numB = parseInt(b.replace(/\D/g, ''), 10) || 0;
@@ -105,7 +105,7 @@ export function build() {
     fs.writeFileSync(path.join(distDir, 'definitions.json'), JSON.stringify(latestCompiled, null, 2) + '\n', 'utf8');
 
     // Root dist/index.js
-    let rootJs = `import definitions from "./definitions.json" with { type: "json" };\n\n`;
+    let rootJs = `import definitions from "./${latestVersion}/definitions.json" with { type: "json" };\n\n`;
     for (const v of versionEntries) {
         rootJs += `import ${v} from "./${v}/definitions.json" with { type: "json" };\n`;
     }
@@ -131,11 +131,12 @@ export function deliver(compiledMap) {
 
     for (const [version, compiled] of Object.entries(compiledMap)) {
         const targetV = path.join(specRepoDir, version);
-        if (fs.existsSync(targetV)) {
-            const destPath = path.join(targetV, 'definitions.json');
-            fs.writeFileSync(destPath, JSON.stringify(compiled, null, 2) + '\n', 'utf8');
-            console.log(`  🚀 Delivered ${version} definitions.json -> ${destPath}`);
+        if (!fs.existsSync(targetV)) {
+            fs.mkdirSync(targetV, { recursive: true });
         }
+        const destPath = path.join(targetV, 'definitions.json');
+        fs.writeFileSync(destPath, JSON.stringify(compiled, null, 2) + '\n', 'utf8');
+        console.log(`  🚀 Delivered ${version} definitions.json -> ${destPath}`);
     }
 }
 
@@ -143,4 +144,3 @@ export function deliver(compiledMap) {
 if (process.argv[1] && process.argv[1].endsWith('build.js')) {
     build();
 }
-
