@@ -1,0 +1,25 @@
+{
+  "tagName": "div",
+  "attributes": {
+    "class": "d-flex align-items-center gap-2"
+  },
+  "children": [
+    {
+      "tagName": "label",
+      "textContent": "${label}",
+      "attributes": {
+        "class": "form-label mb-0 text-nowrap fw-semibold",
+        "for": "${id}"
+      }
+    },
+    {
+      "tagName": "input",
+      "attributes": {
+        "type": "search",
+        "placeholder": "${placeholder}",
+        "class": "form-control",
+        "id": "${id}"
+      }
+    }
+  ]
+}

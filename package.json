@@ -1,0 +1,56 @@
+{
+  "name": "@keshavsoft/spec-repo-definitions",
+  "version": "1.0.0",
+  "description": "Modular, versioned JSON-to-DOM definitions and compiler wrapper for KeshavSoft spec-repo.",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./v5": {
+      "import": "./dist/v5/index.js",
+      "default": "./dist/v5/index.js"
+    },
+    "./v6": {
+      "import": "./dist/v6/index.js",
+      "default": "./dist/v6/index.js"
+    },
+    "./v5/definitions.json": "./dist/v5/definitions.json",
+    "./v6/definitions.json": "./dist/v6/definitions.json",
+    "./definitions.json": "./dist/definitions.json"
+  },
+  "bin": {
+    "spec-repo-definitions": "bin/cli.js"
+  },
+  "files": [
+    "dist",
+    "src",
+    "bin"
+  ],
+  "scripts": {
+    "build": "node scripts/build.js",
+    "deliver": "node scripts/build.js --deliver",
+    "test": "node scripts/test.js",
+    "prepublishOnly": "npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/keshavsoft/spec-repo-definitions.git"
+  },
+  "keywords": [
+    "spec-repo",
+    "spec-repo-definitions",
+    "json-to-dom",
+    "declarative-ui",
+    "dom-builder",
+    "schema-definitions"
+  ],
+  "author": "KeshavSoft",
+  "license": "ISC",
+  "type": "module"
+}

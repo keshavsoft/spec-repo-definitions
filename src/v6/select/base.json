@@ -1,0 +1,8 @@
+{
+  "tagName": "select",
+  "attributes": {
+    "id": "${columnName}",
+    "data-name": "${columnName}"
+  },
+  "children": []
+}
