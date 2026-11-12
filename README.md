@@ -123,3 +123,4 @@ npm publish --access public
 ## License
 
 ISC © KeshavSoft
+

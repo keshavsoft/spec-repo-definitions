@@ -40,3 +40,4 @@ if (compiledContent === originalContent) {
         process.exit(1);
     }
 }
+

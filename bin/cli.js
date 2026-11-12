@@ -9,3 +9,4 @@ try {
     console.error('[spec-repo-definitions] Build failed:', err);
     process.exit(1);
 }
+

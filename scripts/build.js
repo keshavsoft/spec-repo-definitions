@@ -143,3 +143,4 @@ export function deliver(compiledMap) {
 if (process.argv[1] && process.argv[1].endsWith('build.js')) {
     build();
 }
+
